@@ -51,6 +51,7 @@
 			height: 24px;
 			display: inline-block;
 			position: relative;
+			background-color: transparent;
 		}
 		&-inner {
 			display: block;

@@ -30,4 +30,8 @@
   .app {
   
   }
+  .header {
+    padding: 20px 10px;
+    background-color: #000;
+  }
 </style>
