@@ -9,8 +9,6 @@
 <script>
   export default {
     name: 'AHamburger',
-    components: {},
-    props: {},
     data() {
       return { isClosed: false };
     },
@@ -25,12 +23,14 @@
         ];
       }
     },
-    watch: {},
   };
 </script>
 
 <style scoped lang="scss">
 	@import "../styles/vars.scss";
+	
+	$color: #FFE33F;
+	
 	.hamburger {
 		z-index: 1000;
 		padding: 0;
@@ -39,7 +39,6 @@
 		transition-property: opacity, filter;
 		transition-duration: 0.4s;
 		transition-timing-function: linear;
-		font: inherit;
 		color: inherit;
 		text-transform: none;
 		background-color: transparent;
@@ -63,7 +62,7 @@
 		&-inner::after {
 			width: 40px;
 			height: 4px;
-			background-color: $black;
+			background-color: $color;
 			border-radius: 4px;
 			position: absolute;
 			transition-property: transform;
@@ -90,7 +89,7 @@
 		&--slider .hamburger-inner::after { top: 20px }
 		&--slider.is-active .hamburger-inner {
 			transform: translate3d(0, 10px, 0) rotate(45deg);
-			background-color: $black;
+			background-color: $color;
 		}
 		&--slider.is-active .hamburger-inner::before {
 			transform: rotate(-45deg) translate3d(-5.71429px, -6px, 0);
@@ -98,7 +97,7 @@
 		}
 		&--slider.is-active .hamburger-inner::after {
 			transform: translate3d(0, -20px, 0) rotate(-90deg);
-			background-color: $black;
+			background-color: $color;
 		}
 	}
 </style>
