@@ -12,6 +12,7 @@
 </template>
 
 <script>
+  import './styles/styles.scss';
   import AHamburger from './components/AHamburger';
   import {mq} from './utils/mixins/mq';
   
@@ -25,6 +26,7 @@
 </script>
 
 <style lang="scss" scoped>
+  
   .app {
   
   }
