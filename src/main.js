@@ -3,6 +3,7 @@ import App from './App.vue';
 import VueMq from 'vue-mq';
 import router from './router';
 import store from './store';
+import './styles/styles.scss';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;

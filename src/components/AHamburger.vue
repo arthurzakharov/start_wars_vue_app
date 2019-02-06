@@ -29,7 +29,7 @@
 <style scoped lang="scss">
 	@import "../styles/vars.scss";
 	
-	$color: #FFE33F;
+	$color: $c_yellow;
 	
 	.hamburger {
 		z-index: 1000;
