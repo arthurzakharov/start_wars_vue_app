@@ -5,13 +5,15 @@
       <aside class="aside"></aside>
       <article class="page"></article>
     </main>
-    <footer class="footer"></footer>
+    <footer v-if="isMobile" class="footer"></footer>
   </div>
 </template>
 
 <script>
+  import {mq} from './utils/mixins/mq';
   export default {
     name: 'App',
+    mixins: [mq],
   };
 </script>
 
