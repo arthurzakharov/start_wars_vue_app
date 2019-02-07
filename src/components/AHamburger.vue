@@ -7,22 +7,21 @@
 </template>
 
 <script>
+	import {mapGetters} from 'vuex';
+	
   export default {
     name: 'AHamburger',
-    data() {
-      return { isClosed: false };
-    },
     methods: {
-      revertState() {
-      	this.$emit('press');
-      	this.isClosed = !this.isClosed;
-      	},
+      revertState() { this.$emit('press') },
     },
     computed: {
+    	...mapGetters({
+		    isMobileMenuOpen: 'view/getIsMobileMenuOpen',
+	    }),
       hamburger: function () {
         return [
           'hamburger', 'hamburger--slider',
-          {'is-active': this.isClosed }
+          {'is-active': this.isMobileMenuOpen }
         ];
       }
     },

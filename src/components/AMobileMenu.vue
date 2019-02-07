@@ -1,34 +1,55 @@
 <template>
 	<nav class="mobile-menu">
 		<ul class="mobile-menu__list">
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link" exact to="/">Home</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/films">Films</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/people">People</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/planets">Planets</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/species">Species</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/starships">Starships</router-link>
-			</li>
-			<li class="mobile-menu__item">
-				<router-link class="mobile-menu__link"exact to="/vehicles">Vehicles</router-link>
-			</li>
+			<AMobileMenuItem
+				v-for="(item, index) in pages"
+				:key="`${index}_${item.txt}`"
+				:path="item.path"
+				:txt="item.txt"
+			/>
 		</ul>
 	</nav>
 </template>
 
 <script>
+	import AMobileMenuItem from "./AMobileMenuItem";
 	export default {
 		name: 'AMobileMenu',
+		components: {AMobileMenuItem},
+		data() {
+			return {
+				pages: [
+					{
+						path: '/',
+						txt: 'Home',
+					},
+					{
+						path: '/films',
+						txt: 'Films'
+					},
+					{
+						path: '/people',
+						txt: 'People'
+					},
+					{
+						path: '/planets',
+						txt: 'Planets'
+					},
+					{
+						path: '/species',
+						txt: 'Species'
+					},
+					{
+						path: '/starships',
+						txt: 'Starships',
+					},
+					{
+						path: '/vehicles',
+						txt: 'Vehicles',
+					},
+				]
+			};
+		},
 	}
 </script>
 
@@ -47,22 +68,6 @@
 			margin-top: 75px;
 			margin-left: 10px;
 			background-color: transparent;
-		}
-		&__item {
-			margin-bottom: 25px;
-			background-color: transparent;
-			&:last-of-type { margin-bottom: 0 }
-		}
-		&__link {
-			background-color: transparent;
-			font-size: 46px;
-			font-weight: 700;
-			color: $c_yellow;
-			text-decoration: none;
-			text-transform: uppercase;
-			&.active {
-				color: white;
-			}
 		}
 	}
 </style>
