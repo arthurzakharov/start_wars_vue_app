@@ -17,8 +17,11 @@
 </template>
 
 <script>
+	import {mq} from '../utils/mixins/mq.js';
+	
 	export default {
-		name: 'AMain'
+		name: 'AMain',
+		mixins: [mq],
 	}
 </script>
 

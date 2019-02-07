@@ -1,13 +1,14 @@
 <template>
 	<header class="header">
-		<AHamburger />
+		<AHamburger @press="toggleIsMobileMenuOpen"/>
 		<ALogo />
-		<AMobileMenu v-if="isMobile" />
+		<AMobileMenu v-if="isMobile && isMobileMenuOpen" />
 	</header>
 </template>
 
 <script>
 	import {mq} from '../utils/mixins/mq.js';
+	import {mapActions, mapGetters} from 'vuex';
 	import AHamburger from '../components/AHamburger.vue';
 	import ALogo from '../components/ALogo.vue';
 	import AMobileMenu from "./AMobileMenu";
@@ -19,7 +20,17 @@
 			AMobileMenu,
 			ALogo,
 			AHamburger,
-		}
+		},
+		computed: {
+			...mapGetters({
+				isMobileMenuOpen: 'view/getIsMobileMenuOpen',
+			}),
+		},
+		methods: {
+			...mapActions({
+				toggleIsMobileMenuOpen: 'view/toggleIsMobileMenuOpen',
+			}),
+		},
 	}
 </script>
 

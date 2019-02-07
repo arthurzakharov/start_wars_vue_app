@@ -1,5 +1,5 @@
 <template>
-	<nav v-if="isMobileMenuOpen" class="mobile-menu">
+	<nav class="mobile-menu">
 		<ul class="mobile-menu__list">
 			<li class="mobile-menu__item">
 				<router-link class="mobile-menu__link" exact to="/">Home</router-link>
@@ -29,11 +29,6 @@
 <script>
 	export default {
 		name: 'AMobileMenu',
-		data() {
-			return {
-				isMobileMenuOpen: false,
-			};
-		},
 	}
 </script>
 
