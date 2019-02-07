@@ -13,7 +13,10 @@
       return { isClosed: false };
     },
     methods: {
-      revertState() { this.isClosed = !this.isClosed },
+      revertState() {
+      	this.$emit('press');
+      	this.isClosed = !this.isClosed;
+      	},
     },
     computed: {
       hamburger: function () {
