@@ -2,7 +2,7 @@
 	<header class="header">
 		<AHamburger @press="toggleIsMobileMenuOpen"/>
 		<ALogo />
-		<AMobileMenu v-if="isMobile && isMobileMenuOpen" />
+		<AMobileMenu v-if="isMobile || isTablet && isMobileMenuOpen" />
 	</header>
 </template>
 

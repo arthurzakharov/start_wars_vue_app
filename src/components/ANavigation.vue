@@ -1,15 +1,20 @@
 <template>
-	<nav class="mobile-menu">
-		<ANavigation />
-	</nav>
+	<ul class="navigation">
+		<ANavigationItem
+		v-for="(item, index) in pages"
+		:key="`${index}_${item.txt}`"
+		:path="item.path"
+		:txt="item.txt"
+		/>
+	</ul>
 </template>
 
 <script>
-	import ANavigation from "./ANavigation.vue";
+	import ANavigationItem from "./ANavigationItem.vue";
 	
 	export default {
-		name: 'AMobileMenu',
-		components: {ANavigation},
+		name: 'ANavigation',
+		components: {ANavigationItem},
 		data() {
 			return {
 				pages: [
@@ -48,15 +53,9 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../styles/vars.scss";
-	
-	.mobile-menu {
-		position: fixed;
-		z-index: 1;
-		left: 0;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		background-color: $c_black-deep;
+	.navigation {
+		margin-top: 75px;
+		margin-left: 10px;
+		background-color: transparent;
 	}
 </style>

@@ -29,6 +29,7 @@
 	@import "../styles/vars.scss";
 	
 	.main {
+		flex-grow: 1;
 		margin-top: 75px;
 		background-color: $c_black;
 	}
@@ -36,8 +37,8 @@
 		background-color: $c_black;
 		&__item {
 			width: 90%;
-			height: 60px;
-			margin: 20px auto;
+			height: 80px;
+			margin: 25px auto;
 			background-color: dimgray;
 		}
 	}
