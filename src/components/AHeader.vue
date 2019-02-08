@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import {mq} from '../utils/mixins/mq.js';
+	import {mq} from '../mixins/mq.js';
 	import {mapActions, mapGetters} from 'vuex';
 	import AHamburger from '../components/AHamburger.vue';
 	import ALogo from '../components/ALogo.vue';

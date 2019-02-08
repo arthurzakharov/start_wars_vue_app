@@ -1,15 +1,6 @@
 <template>
 	<article class="page">
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
-		<div class="page__item"></div>
+		<router-view></router-view>
 	</article>
 </template>
 

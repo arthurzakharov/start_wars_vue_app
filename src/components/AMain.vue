@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import {mq} from '../utils/mixins/mq.js';
+	import {mq} from '../mixins/mq.js';
 	import APage from "./APage";
 	import ASidebar from "./ASidebar";
 	

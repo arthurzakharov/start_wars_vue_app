@@ -3,6 +3,8 @@
 </template>
 
 <script>
+	import {HTTP} from '../utils/http-common.js';
+	
   export default {
     name: 'People',
     components: {},
@@ -13,6 +15,15 @@
     methods: {},
     computed: {},
     watch: {},
+	  created() {
+    	HTTP.get('/people')
+		    .then((resp) => {
+		    	console.log(resp);
+		    })
+		    .catch((err) => {
+		    	console.log(err);
+		    })
+	  }
   }
 </script>
 

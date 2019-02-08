@@ -7,14 +7,12 @@
 </template>
 
 <script>
-  import {mq} from './utils/mixins/mq.js';
   import AHeader from './components/AHeader.vue';
   import AMain from "./components/AMain";
   import AFooter from "./components/AFooter";
   
   export default {
     name: 'App',
-    mixins: [mq],
     components: {
 	    AFooter,
 	    AMain,
