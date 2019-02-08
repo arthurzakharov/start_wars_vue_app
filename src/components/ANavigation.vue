@@ -53,9 +53,16 @@
 </script>
 
 <style lang="scss" scoped>
+	@import "../styles/vars.scss";
+	
 	.navigation {
-		margin-top: 75px;
-		margin-left: 10px;
 		background-color: transparent;
+	}
+	
+	@media screen and (min-width: $mq_pc) {
+		.navigation {
+			width: 80%;
+			margin: 30px auto;
+		}
 	}
 </style>

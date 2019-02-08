@@ -103,4 +103,37 @@
 			background-color: $color;
 		}
 	}
+	
+	@media screen and (min-width: $mq_tablet) {
+		.hamburger {
+			&-box {
+				width: 60px;
+				height: 44px;
+			}
+			&-inner {
+				width: 60px;
+				height: 7px;
+			}
+			&-inner:before {
+				width: 60px;
+				height: 7px;
+				top: 21px !important;
+			}
+			&-inner:after {
+				width: 60px;
+				height: 7px;
+				top: 42px !important;
+			}
+			&--slider.is-active .hamburger-inner {
+				transform: translate3d(-9px, 20px, 0) rotate(37deg);
+				background-color: #ffe33f;
+				width: 77px;
+			}
+			&--slider.is-active .hamburger-inner:after {
+				transform: translate3d(0px, -42px, 0) rotate(-75deg);
+				background-color: #ffe33f;
+				width: 77px;
+			}
+		}
+	}
 </style>

@@ -1,8 +1,9 @@
 <template>
 	<header class="header">
-		<AHamburger @press="toggleIsMobileMenuOpen"/>
+		<AHamburger v-if="!isPC" @press="toggleIsMobileMenuOpen"/>
+		<h1 v-if="!isMobile" class="header__title">Star Wars Library</h1>
 		<ALogo />
-		<AMobileMenu v-if="isMobile || isTablet && isMobileMenuOpen" />
+		<AMobileMenu v-if="isMobileMenuShown" />
 	</header>
 </template>
 
@@ -25,6 +26,9 @@
 			...mapGetters({
 				isMobileMenuOpen: 'view/getIsMobileMenuOpen',
 			}),
+			isMobileMenuShown: function () {
+				return !this.isPC && this.isMobileMenuOpen
+			}
 		},
 		methods: {
 			...mapActions({
@@ -39,7 +43,7 @@
 	
 	.header {
 		position: fixed;
-		z-index: 1;
+		z-index: 2;
 		top: 0;
 		left: 0;
 		right: 0;
@@ -48,5 +52,18 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between
+	}
+	
+	@media screen and (min-width: $mq_tablet){
+		.header {
+			padding: 25px;
+			&__title {
+				background-color: transparent;
+				font-weight: 700;
+				font-size: 32px;
+				color: $c_yellow;
+				text-transform: uppercase;
+			}
+		}
 	}
 </style>

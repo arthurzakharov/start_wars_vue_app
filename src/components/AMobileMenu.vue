@@ -57,6 +57,15 @@
 		top: 0;
 		right: 0;
 		bottom: 0;
+		padding-top: 75px;
+		padding-left: 10px;
 		background-color: $c_black-deep;
+	}
+	
+	@media screen and (min-width: $mq_tablet) {
+		.mobile-menu {
+			padding-top: 105px;
+			padding-left: 25px;
+		}
 	}
 </style>

@@ -1,7 +1,7 @@
 <template>
-	<li class="mobile-menu-item">
+	<li class="navigation-item">
 		<router-link
-			class="mobile-menu-item__link"
+			class="navigation-item__link"
 			exact
 			:to="path"
 			@click.native="clickHandler"
@@ -37,7 +37,7 @@
 <style lang="scss" scoped>
 	@import "../styles/vars.scss";
 	
-	.mobile-menu-item {
+	.navigation-item {
 		margin-bottom: 25px;
 		background-color: transparent;
 		&:last-of-type { margin-bottom: 0 }
@@ -50,6 +50,31 @@
 			text-transform: uppercase;
 			&.active {
 				color: white;
+			}
+		}
+	}
+	
+	@media screen and (min-width: $mq_tablet) {
+		.navigation-item {
+			margin-bottom: 35px;
+			&__link {
+				font-size: 66px;
+			}
+		}
+	}
+	
+	@media screen and (min-width: $mq_pc) {
+		.navigation-item {
+			display: flex;
+			justify-content: center;
+			margin-bottom: 20px;
+			&__link {
+				padding-bottom: 5px;
+				border-bottom: 3px solid $c_yellow;
+				font-size: 24px;
+			}
+			&__link.active {
+				border-bottom-color: white;
 			}
 		}
 	}
