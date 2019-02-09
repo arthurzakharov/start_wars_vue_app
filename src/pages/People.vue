@@ -1,9 +1,12 @@
 <template>
-	<div class="people">People</div>
+	<div class="people">People
+		<p>{{ number }}</p>
+		<p>{{getPage(1)}}</p>
+	</div>
 </template>
 
 <script>
-	import {HTTP} from '../utils/http-common.js';
+	import {mapActions, mapGetters} from 'vuex';
 	
   export default {
     name: 'People',
@@ -12,17 +15,21 @@
     data() {
       return {};
     },
-    methods: {},
-    computed: {},
+    methods: {
+    	...mapActions({
+		    fetchPage: 'people/fetchPage'
+	    }),
+    },
+    computed: {
+    	...mapGetters({
+		    number: 'people/getItemsAmount',
+		    getPages: 'people/getPages',
+		    getPage: 'people/getPage',
+	    }),
+    },
     watch: {},
 	  created() {
-    	HTTP.get('/people')
-		    .then((resp) => {
-		    	console.log(resp);
-		    })
-		    .catch((err) => {
-		    	console.log(err);
-		    })
+			this.fetchPage(1);
 	  }
   }
 </script>
