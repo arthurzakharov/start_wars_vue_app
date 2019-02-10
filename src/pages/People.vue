@@ -6,6 +6,11 @@
 			:key="`people-${index}`"
 			:people="item"
 		/>
+		<Pagination
+			v-model="page"
+			:records="totalPeople"
+			:per-page="10"
+		/>
 	</div>
 </template>
 
@@ -19,7 +24,9 @@
     props: [],
     data() {
       return {
+      	page: 1,
       	peopleList: [],
+	      totalPeople: 0,
       };
     },
     methods: {
@@ -30,6 +37,7 @@
     computed: {
     	...mapGetters({
 		    number: 'people/getItemsAmount',
+		    getItemsAmount: 'people/getItemsAmount',
 		    getCurrentPage: 'people/getCurrentPage',
 		    getPage: 'people/getPage',
 	    }),
@@ -37,7 +45,10 @@
     watch: {},
 	  created() {
 			this.fetchPage(this.getCurrentPage)
-				.then(() => this.peopleList = this.getPage(this.getCurrentPage))
+				.then(() => {
+					this.peopleList = this.getPage(this.getCurrentPage);
+					this.totalPeople = this.getItemsAmount;
+				})
 				.catch(err => console.error('People.vue create:\n',err));
 	  },
   }
