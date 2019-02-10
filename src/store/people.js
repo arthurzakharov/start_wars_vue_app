@@ -1,4 +1,5 @@
 import {HTTP} from '../utils/http-common.js';
+import {peopleMapper} from '../utils/mappers.js';
 
 const apiPath = 'people/';
 
@@ -7,7 +8,7 @@ const people = {
 	state: {
 		itemsAmount: undefined,
 		totalPages: undefined,
-		currentPage: undefined,
+		currentPage: 1,
 		pages: new Map(),
 	},
 	getters: {
@@ -21,7 +22,11 @@ const people = {
 		async fetchPage({commit, dispatch}, pageNumber) {
 			const params = { page: pageNumber };
 			if(await dispatch('hasRequestedPage', pageNumber)) return;
-			const {data: {count, results}} = await HTTP.get(apiPath, {params});
+			let response;
+			try {
+				response = await HTTP.get(apiPath, {params});
+			}catch (e) { console.log('error on people/fetchPage:\n', e); }
+			const {data: {count, results}} = response;
 			commit('SET_ITEMS_AMOUNT', count);
 			commit('SET_CURRENT_PAGE', pageNumber);
 			commit('SET_TOTAL_PAGES', Math.ceil(count / results.length));
@@ -41,8 +46,8 @@ const people = {
 		SET_TOTAL_PAGES(state, totalPages) { 
 			state.totalPages = totalPages;
 		},
-		SET_PAGES(state, {pageNumber, pages}) { 
-			state.pages.set(pageNumber, pages);
+		SET_PAGES(state, {pageNumber, results}) {
+			state.pages.set(pageNumber, peopleMapper(results));
 		},
 	},
 };
