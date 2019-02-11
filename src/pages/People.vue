@@ -72,7 +72,7 @@
 	@import "../styles/vars.scss";
 	
 	.people {
-		padding: 20px 10px;
+		padding: 20px 10px 0;
 		background-color: transparent;
 		&__title {
 			padding-bottom: 10px;

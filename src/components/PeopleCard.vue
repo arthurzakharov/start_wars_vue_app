@@ -51,9 +51,11 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		padding: 10px;
+		margin-bottom: 20px;
 		border: 1px solid $c_yellow;
 		border-radius: 10px;
 		background-color: transparent;
+		&:last-of-type { margin-bottom: 0 }
 		&__image {
 			flex-basis: 90px;
 			width: 90px;
