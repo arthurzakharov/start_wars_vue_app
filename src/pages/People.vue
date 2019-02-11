@@ -40,9 +40,19 @@
     	...mapActions({
 		    fetchPage: 'people/fetchPage'
 	    }),
-      functionName(e) {
-    	  console.log('function: ', e);
+      functionName(nextPageNumber) {
+    	  console.log('function: ', nextPageNumber);
+				this.updateData(nextPageNumber)
       },
+	    updateData(nextPageNumber) {
+        this.fetchPage(nextPageNumber)
+          .then(() => {
+            this.currentPage = this.getCurrentPage;
+            this.totalPages = this.getTotalPages;
+            this.peopleList = this.getPage(this.getCurrentPage);
+          })
+          .catch(err => console.error('People.vue create:\n',err));
+	    }
     },
     computed: {
     	...mapGetters({
@@ -53,13 +63,7 @@
     },
     watch: {},
 	  created() {
-			this.fetchPage(this.getCurrentPage)
-				.then(() => {
-					this.currentPage = this.getCurrentPage;
-					this.totalPages = this.getTotalPages;
-          this.peopleList = this.getPage(this.getCurrentPage);
-				})
-				.catch(err => console.error('People.vue create:\n',err));
+      this.updateData(this.getCurrentPage)
 	  },
   }
 </script>
