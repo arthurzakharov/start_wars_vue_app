@@ -1,5 +1,5 @@
-import {HTTP} from '../utils/http-common.js';
-import {peopleMapper} from '../utils/mappers.js';
+import {HTTP} from '../../utils/http-common.js';
+import {peopleMapper} from '../../utils/mappers.js';
 
 const apiPath = 'people/';
 
@@ -37,13 +37,13 @@ const people = {
 		},
 	},
 	mutations: {
-		SET_ITEMS_AMOUNT(state, amount) { 
+		SET_ITEMS_AMOUNT(state, amount) {
 			state.itemsAmount = amount;
 		},
-		SET_CURRENT_PAGE(state, currentPage) { 
+		SET_CURRENT_PAGE(state, currentPage) {
 			state.currentPage = currentPage;
 		},
-		SET_TOTAL_PAGES(state, totalPages) { 
+		SET_TOTAL_PAGES(state, totalPages) {
 			state.totalPages = totalPages;
 		},
 		SET_PAGES(state, {pageNumber, results}) {
