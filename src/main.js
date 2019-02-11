@@ -3,13 +3,13 @@ import App from './App.vue';
 import VueMq from 'vue-mq';
 import router from './router';
 import store from './store/store';
-import Pagination from 'vue-pagination-2';
+import Paginate from 'vuejs-paginate';
 import './styles/styles.scss';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
-Vue.component('Pagination', Pagination);
+Vue.component('Paginate', Paginate);
 
 Vue.use(VueMq, {
   breakpoints: {

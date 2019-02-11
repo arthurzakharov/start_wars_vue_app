@@ -6,10 +6,17 @@
 			:key="`people-${index}`"
 			:people="item"
 		/>
-		<Pagination
-			v-model="page"
-			:records="totalPeople"
-			:per-page="10"
+		<Paginate
+			v-model="currentPage"
+			container-class="paginate"
+			page-class="paginate__item"
+			prev-class="paginate__item"
+			next-class="paginate__item"
+			page-link-class="paginate__link"
+			prev-link-class="paginate__link"
+			next-link-class="paginate__link"
+			:page-count="totalPages"
+			:click-handler="functionName"
 		/>
 	</div>
 </template>
@@ -24,21 +31,23 @@
     props: [],
     data() {
       return {
-      	page: 1,
+      	currentPage: 0,
+	      totalPages: 0,
       	peopleList: [],
-	      totalPeople: 0,
       };
     },
     methods: {
     	...mapActions({
 		    fetchPage: 'people/fetchPage'
 	    }),
+      functionName(e) {
+    	  console.log('function: ', e);
+      },
     },
     computed: {
     	...mapGetters({
-		    number: 'people/getItemsAmount',
-		    getItemsAmount: 'people/getItemsAmount',
 		    getCurrentPage: 'people/getCurrentPage',
+        getTotalPages: 'people/getTotalPages',
 		    getPage: 'people/getPage',
 	    }),
     },
@@ -46,8 +55,9 @@
 	  created() {
 			this.fetchPage(this.getCurrentPage)
 				.then(() => {
-					this.peopleList = this.getPage(this.getCurrentPage);
-					this.totalPeople = this.getItemsAmount;
+					this.currentPage = this.getCurrentPage;
+					this.totalPages = this.getTotalPages;
+          this.peopleList = this.getPage(this.getCurrentPage);
 				})
 				.catch(err => console.error('People.vue create:\n',err));
 	  },
@@ -67,6 +77,17 @@
 			font-size: 24px;
 			color: $c_yellow;
 			background-color: transparent;
+		}
+	}
+	/deep/.paginate {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 10%;
+		margin: 30px 0;
+		&__item.disabled { opacity: 0.3 }
+		&__item.active .paginate__link { color: white }
+		&__link {
+			color: $c_yellow;
 		}
 	}
 </style>
