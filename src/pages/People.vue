@@ -46,7 +46,8 @@
       },
 	    updateData(nextPageNumber) {
         this.fetchPage(nextPageNumber)
-          .then(() => {
+          .then((e) => {
+            console.log('e',e);
             this.currentPage = this.getCurrentPage;
             this.totalPages = this.getTotalPages;
             this.peopleList = this.getPage(this.getCurrentPage);

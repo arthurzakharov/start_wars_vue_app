@@ -6,13 +6,11 @@ const apiPath = 'people/';
 const people = {
 	namespaced: true,
 	state: {
-		itemsAmount: undefined,
 		totalPages: undefined,
 		currentPage: 1,
 		pages: new Map(),
 	},
 	getters: {
-		getItemsAmount: state => state.itemsAmount,
 		getCurrentPage: state => state.currentPage,
 		getTotalPages: state => state.totalPages,
 		getPages: state => state.pages,
@@ -28,8 +26,7 @@ const people = {
 				response = await HTTP.get(apiPath, {params});
 			}catch (e) { console.log('error on people/fetchPage:\n', e); }
 			const {data: {count, results}} = response;
-			commit('SET_ITEMS_AMOUNT', count);
-			commit('SET_TOTAL_PAGES', Math.ceil(count / results.length));
+			commit('SET_TOTAL_PAGES', count);
 			commit('SET_PAGES', {pageNumber, results});
 		},
 		async hasRequestedPage({getters}, pageNumber) {
@@ -37,14 +34,12 @@ const people = {
 		},
 	},
 	mutations: {
-		SET_ITEMS_AMOUNT(state, amount) {
-			state.itemsAmount = amount;
-		},
 		SET_CURRENT_PAGE(state, currentPage) {
 			state.currentPage = currentPage;
 		},
 		SET_TOTAL_PAGES(state, totalPages) {
-			state.totalPages = totalPages;
+			const itemsPerPage = 10;
+			state.totalPages = Math.ceil(totalPages / itemsPerPage);
 		},
 		SET_PAGES(state, {pageNumber, results}) {
 			state.pages.set(pageNumber, peopleMapper(results));
