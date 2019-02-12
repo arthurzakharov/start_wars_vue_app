@@ -2,8 +2,9 @@
 	<div class="people">
 		<h1 class="people__title">People of Star War</h1>
 		<div class="people__list">
-			<ALoadSpinner />
+			<ALoadSpinner v-if="isLoading" />
 			<PeopleCard
+				v-else
 				v-for="(item, index) in peopleList"
 				:key="`people-${index}`"
 				:people="item"
@@ -32,20 +33,26 @@
       	currentPage: 0,
 	      totalPages: 0,
       	peopleList: [],
+	      isLoading: false,
       };
     },
     methods: {
     	...mapActions({
 		    fetchPage: 'people/fetchPage'
 	    }),
-	    updateData(nextPageNumber) {
-        this.fetchPage(nextPageNumber ? nextPageNumber : 1)
-          .then(() => {
-            this.currentPage = this.getCurrentPage;
-            this.totalPages = this.getTotalPages;
-            this.peopleList = this.getPage(this.currentPage);
-          })
-          .catch(err => console.error('People.vue create:\n',err));
+	    async updateData(nextPageNumber) {
+    	  this.isLoading = true;
+    	  try {
+          await this.fetchPage(nextPageNumber ? nextPageNumber : 1);
+          this.currentPage = this.getCurrentPage;
+          this.totalPages = this.getTotalPages;
+          this.peopleList = this.getPage(this.currentPage);
+	      }catch (e) {
+          console.error('People.vue create:\n', e);
+        }finally {
+		      this.isLoading = false;
+        }
+ 
 	    }
     },
     computed: {
@@ -69,7 +76,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
-		
+		justify-content: space-between;
 		padding: 20px 10px 0;
 		background-color: transparent;
 		&__title {
