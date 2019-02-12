@@ -1,11 +1,14 @@
 <template>
 	<div class="people">
 		<h1 class="people__title">People of Star War</h1>
-		<PeopleCard
-			v-for="(item, index) in peopleList"
-			:key="`people-${index}`"
-			:people="item"
-		/>
+		<div class="people__list">
+			<ALoadSpinner />
+			<PeopleCard
+				v-for="(item, index) in peopleList"
+				:key="`people-${index}`"
+				:people="item"
+			/>
+		</div>
 		<APagination
 			:total-pages="totalPages"
 			:current-page="currentPage"
@@ -18,10 +21,11 @@
 	import {mapActions, mapGetters} from 'vuex';
 	import APagination from '../components/APagination.vue';
 	import PeopleCard from "../components/PeopleCard";
+  import ALoadSpinner from "../components/ALoadSpinner";
 	
   export default {
     name: 'People',
-    components: {PeopleCard, APagination},
+    components: {ALoadSpinner, PeopleCard, APagination},
     props: [],
     data() {
       return {
