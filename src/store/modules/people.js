@@ -18,14 +18,13 @@ const people = {
 	},
 	actions: {
 		async fetchPage({commit, dispatch}, pageNumber) {
-			console.log('fetchPage ', pageNumber);
 			commit('SET_CURRENT_PAGE', pageNumber);
 			if(await dispatch('hasRequestedPage', pageNumber)) return;
 			let response;
 			try {
 				const params = { page: pageNumber };
 				response = await HTTP.get(apiPath, {params});
-			}catch (e) { console.log('error on people/fetchPage:\n', e); }
+			}catch (e) { console.error('error on people/fetchPage:\n', e); }
 			const {data: {count, results}} = response;
 			commit('SET_TOTAL_PAGES', count);
 			commit('SET_PAGES', {pageNumber, results});
