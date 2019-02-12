@@ -6,28 +6,22 @@
 			:key="`people-${index}`"
 			:people="item"
 		/>
-		<Paginate
-			v-model="currentPage"
-			container-class="paginate"
-			page-class="paginate__item"
-			prev-class="paginate__item"
-			next-class="paginate__item"
-			page-link-class="paginate__link"
-			prev-link-class="paginate__link"
-			next-link-class="paginate__link"
-			:page-count="totalPages"
-			:click-handler="functionName"
+		<APagination
+			:total-pages="totalPages"
+			:current-page="currentPage"
+			:click-handler="updateData"
 		/>
 	</div>
 </template>
 
 <script>
 	import {mapActions, mapGetters} from 'vuex';
+	import APagination from '../components/APagination.vue';
 	import PeopleCard from "../components/PeopleCard";
 	
   export default {
     name: 'People',
-    components: {PeopleCard},
+    components: {PeopleCard, APagination},
     props: [],
     data() {
       return {
@@ -40,17 +34,12 @@
     	...mapActions({
 		    fetchPage: 'people/fetchPage'
 	    }),
-      functionName(nextPageNumber) {
-    	  console.log('function: ', nextPageNumber);
-				this.updateData(nextPageNumber)
-      },
 	    updateData(nextPageNumber) {
-        this.fetchPage(nextPageNumber)
-          .then((e) => {
-            console.log('e',e);
+        this.fetchPage(nextPageNumber ? nextPageNumber : 1)
+          .then(() => {
             this.currentPage = this.getCurrentPage;
             this.totalPages = this.getTotalPages;
-            this.peopleList = this.getPage(this.getCurrentPage);
+            this.peopleList = this.getPage(this.currentPage);
           })
           .catch(err => console.error('People.vue create:\n',err));
 	    }
@@ -62,9 +51,8 @@
 		    getPage: 'people/getPage',
 	    }),
     },
-    watch: {},
 	  created() {
-      this.updateData(this.getCurrentPage)
+      this.updateData(this.currentPage)
 	  },
   }
 </script>
@@ -82,17 +70,6 @@
 			font-size: 24px;
 			color: $c_yellow;
 			background-color: transparent;
-		}
-	}
-	/deep/.paginate {
-		display: flex;
-		justify-content: space-between;
-		padding: 0 10%;
-		margin: 30px 0;
-		&__item.disabled { opacity: 0.3 }
-		&__item.active .paginate__link { color: white }
-		&__link {
-			color: $c_yellow;
 		}
 	}
 </style>

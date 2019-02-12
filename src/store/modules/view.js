@@ -4,7 +4,7 @@ const view = {
 		isMobileMenuOpen: false,
 	},
 	getters: {
-		getIsMobileMenuOpen: (state) => state.isMobileMenuOpen,
+		getIsMobileMenuOpen: state => state.isMobileMenuOpen,
 	},
 	actions: {
 		toggleIsMobileMenuOpen({commit}, payload) {

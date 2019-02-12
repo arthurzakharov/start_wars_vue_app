@@ -6,7 +6,7 @@ const apiPath = 'people/';
 const people = {
 	namespaced: true,
 	state: {
-		totalPages: undefined,
+		totalPages: 0,
 		currentPage: 1,
 		pages: new Map(),
 	},
@@ -18,6 +18,7 @@ const people = {
 	},
 	actions: {
 		async fetchPage({commit, dispatch}, pageNumber) {
+			console.log('fetchPage ', pageNumber);
 			commit('SET_CURRENT_PAGE', pageNumber);
 			if(await dispatch('hasRequestedPage', pageNumber)) return;
 			let response;
