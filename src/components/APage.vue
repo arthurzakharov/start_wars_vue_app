@@ -14,6 +14,8 @@
 	@import "../styles/vars.scss";
 	
 	.page {
+		display: flex;
+		flex-basis: 100%;
 		background-color: $c_black;
 		&__item {
 			width: 90%;

@@ -22,6 +22,7 @@
 	
 	.main {
 		flex-grow: 1;
+		display: flex;
 		margin-top: 75px;
 		background-color: $c_black;
 	}

@@ -65,6 +65,11 @@
 	@import "../styles/vars.scss";
 	
 	.people {
+		flex-basis: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		
 		padding: 20px 10px 0;
 		background-color: transparent;
 		&__title {

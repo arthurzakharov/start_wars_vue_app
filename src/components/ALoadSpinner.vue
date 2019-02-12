@@ -20,9 +20,10 @@
 	@import "../styles/vars.scss";
 	
 	.load-spinner {
-		display: inline-block;
+		display: block;
 		width: 164px;
 		height: 164px;
+		margin: 0 auto;
 		&:after {
 			content: " ";
 			display: block;
@@ -38,9 +39,14 @@
 	
 	@keyframes load-spinner {
 		0% {
+			opacity: 1;
 			transform: rotate(0deg);
 		}
+		50% {
+			opacity: 0.4;
+		}
 		100% {
+			opacity: 1;
 			transform: rotate(360deg);
 		}
 	}
