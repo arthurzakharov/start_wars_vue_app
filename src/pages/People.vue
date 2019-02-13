@@ -1,15 +1,13 @@
 <template>
 	<div class="people">
 		<h1 class="people__title">People of Star War</h1>
-		<div class="people__list">
-			<ALoadSpinner v-if="isLoading" />
-			<PeopleCard
-				v-else
+		<AWithSpinner class="people__list" :is-loading="isLoading">
+			<APeopleCard
 				v-for="(item, index) in peopleList"
 				:key="`people-${index}`"
 				:people="item"
 			/>
-		</div>
+		</AWithSpinner>
 		<APagination
 			:total-pages="totalPages"
 			:current-page="currentPage"
@@ -21,12 +19,12 @@
 <script>
 	import {mapActions, mapGetters} from 'vuex';
 	import APagination from '../components/APagination.vue';
-	import PeopleCard from "../components/PeopleCard";
-  import ALoadSpinner from "../components/ALoadSpinner";
+	import APeopleCard from '../components/APeopleCard';
+	import AWithSpinner from '../components/AWithSpinner.vue';
 	
   export default {
     name: 'People',
-    components: {ALoadSpinner, PeopleCard, APagination},
+    components: {AWithSpinner, APeopleCard, APagination},
     props: [],
     data() {
       return {
