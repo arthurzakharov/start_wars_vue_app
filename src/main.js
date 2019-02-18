@@ -4,12 +4,15 @@ import VueMq from 'vue-mq';
 import router from './router';
 import store from './store/store';
 import Paginate from 'vuejs-paginate';
+import globalMixin from './mixins/global';
 import './styles/styles.scss';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
 Vue.component('Paginate', Paginate);
+
+Vue.mixin(globalMixin);
 
 Vue.use(VueMq, {
   breakpoints: {
