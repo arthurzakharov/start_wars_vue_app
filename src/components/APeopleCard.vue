@@ -2,7 +2,7 @@
 	<div class="people-card">
 		<div class="people-card__image"></div>
 		<div class="people-card__info">
-			<div v-for="item in arr" :key="getUID(item)" class="people-card__line">
+			<div v-for="item in people" :key="getUID(item)" class="people-card__line">
 				<p class="people-card__line">
 					<b class="bold">{{ item.field }}: </b>{{ item.value }}
 				</p>
@@ -19,15 +19,6 @@
 				type: Object,
 				required: true,
 			}
-		},
-		data() {
-		  return {
-		    arr: [
-		      'sdfsfsfs',
-			    'jsdhfsdf',
-			    'ksdjfksjfks,'
-		    ]
-		  };
 		},
 	}
 </script>
