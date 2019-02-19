@@ -3,9 +3,7 @@
 		<div class="people-card__image"></div>
 		<div class="people-card__info">
 			<div v-for="item in people" :key="getUID(item)" class="people-card__line">
-				<p class="people-card__line">
-					<b class="bold">{{ item.field }}: </b>{{ item.value }}
-				</p>
+				<b class="bold">{{ item.field }}: </b>{{ item.value }}
 			</div>
 		</div>
 	</div>

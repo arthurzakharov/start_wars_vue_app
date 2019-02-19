@@ -1,26 +1,89 @@
 <template>
-	<div class="species">Species</div>
+	<div class="species">
+		<h1 class="species__title">Species of Star War</h1>
+		<AWithSpinner class="species__list" :is-loading="isLoading">
+			<ASpeciesCard
+				v-for="(item, index) in speciesList"
+				:key="`species-${index}`"
+				:species="item"
+			/>
+		</AWithSpinner>
+		<APagination
+			:total-pages="totalPages"
+			:current-page="currentPage"
+			:click-handler="updateData"
+		/>
+	</div>
 </template>
 
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import APagination from '../components/APagination.vue';
-  import APeopleCard from '../components/APeopleCard';
+  import ASpeciesCard from '../components/ASpeciesCard.vue';
   import AWithSpinner from '../components/AWithSpinner.vue';
-  
+
   export default {
-    name: 'Species',
-    components: {},
+    name: 'ASpeciesCard',
+    components: {AWithSpinner, ASpeciesCard, APagination},
     props: [],
     data() {
-      return {};
+      return {
+        currentPage: 0,
+        totalPages: 0,
+        speciesList: [],
+        isLoading: false,
+      };
     },
-    methods: {},
-    computed: {},
-    watch: {},
+    methods: {
+      ...mapActions({
+        fetchPage: 'species/fetchPage'
+      }),
+      async updateData(nextPageNumber) {
+        this.isLoading = true;
+        try {
+          await this.fetchPage(nextPageNumber ? nextPageNumber : 1);
+          this.currentPage = this.getCurrentPage;
+          this.totalPages = this.getTotalPages;
+          this.speciesList = this.getPage(this.currentPage);
+        }catch (e) {
+          console.error('Species.vue create:\n', e);
+        }finally {
+          this.isLoading = false;
+        }
+
+      }
+    },
+    computed: {
+      ...mapGetters({
+        getCurrentPage: 'species/getCurrentPage',
+        getTotalPages: 'species/getTotalPages',
+        getPage: 'species/getPage',
+      }),
+    },
+    created() {
+      this.updateData(this.currentPage)
+    },
   }
 </script>
 
 <style lang="scss" scoped>
-
+	@import "../styles/vars.scss";
+	
+	.species {
+		flex-basis: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: space-between;
+		padding: 20px 10px 0;
+		background-color: transparent;
+		&__title {
+			padding-bottom: 10px;
+			margin-bottom: 25px;
+			border-bottom: 3px solid $c_yellow;
+			font-size: 24px;
+			color: $c_yellow;
+			background-color: transparent;
+		}
+	}
 </style>
