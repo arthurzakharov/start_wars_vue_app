@@ -2,10 +2,10 @@
 	<div class="species">
 		<h1 class="species__title">Species of Star War</h1>
 		<AWithSpinner class="species__list" :is-loading="isLoading">
-			<ASpeciesCard
+			<AItemCard
 				v-for="item in speciesList"
 				:key="getUID(item)"
-				:species="item"
+				:item="item"
 			/>
 		</AWithSpinner>
 		<APagination
@@ -19,12 +19,12 @@
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import APagination from '../components/APagination.vue';
-  import ASpeciesCard from '../components/ASpeciesCard.vue';
+  import AItemCard from '../components/AItemCard.vue';
   import AWithSpinner from '../components/AWithSpinner.vue';
 
   export default {
     name: 'ASpecies',
-    components: {AWithSpinner, ASpeciesCard, APagination},
+    components: {AWithSpinner, AItemCard, APagination},
     props: [],
     data() {
       return {

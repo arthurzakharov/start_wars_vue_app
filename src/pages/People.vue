@@ -2,10 +2,10 @@
 	<div class="people">
 		<h1 class="people__title">People of Star War</h1>
 		<AWithSpinner class="people__list" :is-loading="isLoading">
-			<APeopleCard
+			<AItemCard
 				v-for="item in peopleList"
 				:key="getUID(item)"
-				:people="item"
+				:item="item"
 			/>
 		</AWithSpinner>
 		<APagination
@@ -19,12 +19,12 @@
 <script>
 	import {mapActions, mapGetters} from 'vuex';
 	import APagination from '../components/APagination.vue';
-	import APeopleCard from '../components/APeopleCard';
+	import AItemCard from '../components/AItemCard.vue';
 	import AWithSpinner from '../components/AWithSpinner.vue';
 	
   export default {
     name: 'People',
-    components: {AWithSpinner, APeopleCard, APagination},
+    components: {AWithSpinner, AItemCard, APagination},
     props: [],
     data() {
       return {

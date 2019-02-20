@@ -1,9 +1,9 @@
 <template>
-	<div class="species-card">
-		<div class="species-card__image"></div>
-		<div class="species-card__info">
-			<div v-for="item in species" :key="getUID(item)" class="species-card__line">
-				<b class="bold">{{ item.field }}: </b>{{ item.value }}
+	<div class="item-card">
+		<div class="item-card__image"></div>
+		<div class="item-card__info">
+			<div v-for="obj in item" :key="getUID(obj)" class="item-card__line">
+				<b class="bold">{{ obj.field }}: </b>{{ obj.value }}
 			</div>
 		</div>
 	</div>
@@ -11,9 +11,9 @@
 
 <script>
   export default {
-    name: 'ASpeciesCard',
+    name: 'AItemCard',
     props: {
-      species: {
+      item: {
         type: Object,
         required: true,
       }
@@ -24,7 +24,7 @@
 <style lang="scss" scoped>
 	@import "../styles/vars.scss";
 	
-	.species-card {
+	.item-card {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;

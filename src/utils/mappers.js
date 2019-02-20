@@ -34,7 +34,6 @@ export const peopleMapper = (apiCallResult) => {
 				value: item['skin_color']
 			},
 		});
-		console.log(mappedResult);
 		return mappedResult;
 	}, []);
 };
@@ -79,7 +78,6 @@ export const speciesMapper = (apiCallResult) => {
 				value: item['language']
 			},
 		});
-		console.log(mappedResult);
 		return mappedResult;
 	}, []);
 };
