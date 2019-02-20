@@ -38,7 +38,7 @@ const people = {
 			state.currentPage = currentPage;
 		},
 		SET_TOTAL_PAGES(state, totalPages) {
-			const itemsPerPage = 10;
+ 			const itemsPerPage = 10;
 			state.totalPages = Math.ceil(totalPages / itemsPerPage);
 		},
 		SET_PAGES(state, {pageNumber, results}) {

@@ -17,7 +17,7 @@ const species = {
     getPage: state => pageNumber => state.pages.get(pageNumber),
   },
   actions: {
-    async fetchPage({commit, dispatch}, pageNumber) {
+    async fetchPage({commit, dispatch, getters}, pageNumber) {
       commit('SET_CURRENT_PAGE', pageNumber);
       if(await dispatch('hasRequestedPage', pageNumber)) return;
       let response;

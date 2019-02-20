@@ -3,8 +3,8 @@
 		<h1 class="people__title">People of Star War</h1>
 		<AWithSpinner class="people__list" :is-loading="isLoading">
 			<APeopleCard
-				v-for="(item, index) in peopleList"
-				:key="`people-${index}`"
+				v-for="item in peopleList"
+				:key="getUID(item)"
 				:people="item"
 			/>
 		</AWithSpinner>

@@ -3,8 +3,8 @@
 		<h1 class="species__title">Species of Star War</h1>
 		<AWithSpinner class="species__list" :is-loading="isLoading">
 			<ASpeciesCard
-				v-for="(item, index) in speciesList"
-				:key="`species-${index}`"
+				v-for="item in speciesList"
+				:key="getUID(item)"
 				:species="item"
 			/>
 		</AWithSpinner>
@@ -23,7 +23,7 @@
   import AWithSpinner from '../components/AWithSpinner.vue';
 
   export default {
-    name: 'ASpeciesCard',
+    name: 'ASpecies',
     components: {AWithSpinner, ASpeciesCard, APagination},
     props: [],
     data() {
@@ -50,7 +50,6 @@
         }finally {
           this.isLoading = false;
         }
-
       }
     },
     computed: {
