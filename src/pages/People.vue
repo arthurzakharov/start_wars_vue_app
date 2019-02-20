@@ -61,7 +61,7 @@
 	    }),
     },
 	  created() {
-      this.updateData(this.currentPage)
+      // this.updateData(this.currentPage)
 	  },
   }
 </script>

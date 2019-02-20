@@ -1,9 +1,9 @@
 <template>
-	<div class="species">
-		<h1 class="species__title">Species of Star War</h1>
-		<AWithSpinner class="species__list" :is-loading="isLoading">
+	<div class="page">
+		<h1 class="page__title">Species of Star War</h1>
+		<AWithSpinner class="page__list" :is-loading="isLoading">
 			<AItemCard
-				v-for="item in speciesList"
+				v-for="item in pageList"
 				:key="getUID(item)"
 				:item="item"
 			/>
@@ -23,14 +23,14 @@
   import AWithSpinner from '../components/AWithSpinner.vue';
 
   export default {
-    name: 'ASpecies',
+    name: 'PageTemplate',
     components: {AWithSpinner, AItemCard, APagination},
     props: [],
     data() {
       return {
         currentPage: 0,
         totalPages: 0,
-        speciesList: [],
+        pageList: [],
         isLoading: false,
       };
     },
@@ -44,7 +44,7 @@
           await this.fetchPage(nextPageNumber ? nextPageNumber : 1);
           this.currentPage = this.getCurrentPage;
           this.totalPages = this.getTotalPages;
-          this.speciesList = this.getPage(this.currentPage);
+          this.pageList = this.getPage(this.currentPage);
         }catch (e) {
           console.error('Species.vue create:\n', e);
         }finally {
@@ -60,7 +60,7 @@
       }),
     },
     created() {
-      // this.updateData(this.currentPage)
+      this.updateData(this.currentPage)
     },
   }
 </script>
@@ -68,7 +68,7 @@
 <style lang="scss" scoped>
 	@import "../styles/vars.scss";
 	
-	.species {
+	.page {
 		flex-basis: 100%;
 		display: flex;
 		flex-direction: column;
