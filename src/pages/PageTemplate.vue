@@ -1,12 +1,12 @@
 <template>
 	<div class="page">
-		<h1 class="page__title">Species of Star War</h1>
+		<h1 class="page__title">{{ pageInfo.title }} of Star War</h1>
 		<AWithSpinner class="page__list" :is-loading="isLoading">
-			<AItemCard
-				v-for="item in pageList"
-				:key="getUID(item)"
-				:item="item"
-			/>
+			<!--<AItemCard-->
+				<!--v-for="item in pageList"-->
+				<!--:key="getUID(item)"-->
+				<!--:item="item"-->
+			<!--/>-->
 		</AWithSpinner>
 		<APagination
 			:total-pages="totalPages"
@@ -32,35 +32,46 @@
         totalPages: 0,
         pageList: [],
         isLoading: false,
+	      pageInfo: {},
       };
     },
     methods: {
       ...mapActions({
-        fetchPage: 'species/fetchPage'
+        changeCurrentPageInfo: 'data/changeCurrentPageInfo',
+        fetchPage: 'data/fetchPage',
       }),
-      async updateData(nextPageNumber) {
+      async updateData(payload) {
+        console.log('updateData: ', payload);
         this.isLoading = true;
         try {
-          await this.fetchPage(nextPageNumber ? nextPageNumber : 1);
-          this.currentPage = this.getCurrentPage;
-          this.totalPages = this.getTotalPages;
-          this.pageList = this.getPage(this.currentPage);
+          await this.fetchPage(payload);
         }catch (e) {
-          console.error('Species.vue create:\n', e);
+          console.error('[PageTemplate.vue]updateData:\n', e);
         }finally {
-          this.isLoading = false;
+	        this.isLoading = false;
         }
       }
     },
     computed: {
       ...mapGetters({
-        getCurrentPage: 'species/getCurrentPage',
-        getTotalPages: 'species/getTotalPages',
-        getPage: 'species/getPage',
+        getCurrentPageInfo: 'data/getCurrentPageInfo',
+        getCurrentPageNumber: 'data/getCurrentPageNumber',
       }),
     },
-    created() {
-      this.updateData(this.currentPage)
+	  beforeRouteEnter(to,from, next) {
+      console.log('beforeRouteEnter [COMPONENT]');
+      next(self => {
+        self.changeCurrentPageInfo(to.name)
+	        .then(() => self.pageInfo = self.getCurrentPageInfo)
+	        .catch((e) => console.error(`error on PageTemplate in changeCurrentPage\n${e}`))
+      });
+	  },
+	  created() {
+      console.log('created [COMPONENT]: ', this.pageInfo);
+      this.updateData({
+	      name: this.getCurrentPageInfo.module,
+	      number: 1
+      });
     },
   }
 </script>

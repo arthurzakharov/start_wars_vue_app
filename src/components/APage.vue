@@ -1,5 +1,5 @@
 <template>
-	<article class="page">
+	<article class="content">
 		<router-view></router-view>
 	</article>
 </template>
@@ -13,7 +13,7 @@
 <style lang="scss" scoped>
 	@import "../styles/vars.scss";
 	
-	.page {
+	.content {
 		display: flex;
 		flex-basis: 100%;
 		background-color: $c_black;
@@ -26,7 +26,7 @@
 	}
 	
 	@media screen and (min-width: $mq_pc) {
-		.page {
+		.content {
 			margin-left: 20%;
 		}
 	}

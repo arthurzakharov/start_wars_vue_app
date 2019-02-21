@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './pages/Home.vue';
+import PageTemplate from './pages/PageTemplate.vue';
+import store from './store/store.js';
 
 Vue.use(Router);
 
-export default new Router({
+
+const router =  new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   linkActiveClass: 'active',
@@ -13,37 +16,46 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: PageTemplate
     },
     {
       path: '/films',
       name: 'films',
-      component: () => import('./pages/Films.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
     {
       path: '/people',
       name: 'people',
-      component: () => import('./pages/People.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
     {
       path: '/planets',
       name: 'planets',
-      component: () => import('./pages/Planets.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
     {
       path: '/species',
       name: 'species',
-      component: () => import('./pages/Species.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
     {
       path: '/starships',
       name: 'starships',
-      component: () => import('./pages/Starships.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
     {
       path: '/vehicles',
       name: 'vehicles',
-      component: () => import('./pages/Vehicles.vue'),
+      component: () => import('./pages/PageTemplate.vue'),
     },
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  console.log('beforeEach [ROUTER]');
+  store.dispatch('data/changeCurrentPageInfo', to.name)
+    .then(() => next())
+    .catch((e) => console.error(`error on performing vuex action ata/changeCurrentPageInfo\n${e}`));
+});
+
+export default router;
