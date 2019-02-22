@@ -1,4 +1,5 @@
 import {HTTP} from '../../utils/http-common.js';
+import {DATA} from "../mutation-types";
 import {peopleMapper, speciesMapper} from '../../utils/mappers.js';
 
 const data = {
@@ -32,96 +33,80 @@ const data = {
   },
   getters: {
     getCurrentPageInfo: state => {
+      console.log('getCurrentPageInfo: ', state);
       let info = {};
       switch (state.currentPageInfo) {
-        case 'home':
-          info.title = 'Home';
-          info.module = 'home';
-          break;
         case 'films':
           info.title = 'Films';
-          info.module = 'films';
+          info.name = 'films';
           break;
         case 'people':
           info.title = 'People';
-          info.module = 'people';
+          info.name = 'people';
           break;
         case 'planets':
           info.title = 'Planets';
-          info.module = 'planets';
+          info.name = 'planets';
           break;
         case 'species':
           info.title = 'Species';
-          info.module = 'species';
+          info.name = 'species';
           break;
         case 'starships':
           info.title = 'Starships';
-          info.module = 'starships';
+          info.name = 'starships';
           break;
         case 'vehicles':
           info.title = 'Vehicles';
-          info.module = 'vehicles';
+          info.name = 'vehicles';
           break;
         default:
-          info.title = 'Home';
-          info.module = 'home';
-          console.warn(`view/currentPage contains unexpected value ${state.currentPageInfo}`);
+          info.title = 'Films';
+          info.name = 'films';
+          console.warn(`data/currentPageInfo contains unexpected value ${state.currentPageInfo}`);
       }
       return info;
     },
-    getCurrentPageNumber: state => page => state.currentPageNumber[page],
-    getTotalPages: state => page => state.totalPages[page],
-    getPages: state => page => {
-      console.log('getPages: ', page);
-      return state.pages[page]
-    },
+    getCurrentPageNumber: state => pageName => state.currentPageNumber[pageName],
+    getTotalPages: state => pageName => state.totalPages[pageName],
+    getPages: state => payload => state.pages[payload.name].get(payload.number),
+    getPagesMap: state => pageName => state.pages[pageName],
   },
   actions: {
     changeCurrentPageInfo({commit}, payload) {
-      commit('SET_CURRENT_PAGE_INFO', payload);
+      commit(DATA.SET_CURRENT_PAGE_INFO, payload);
     },
-    async fetchPage({commit, dispatch}, payload) {
-      const {name,number} = payload;
-      console.log('fetchPage:', payload);
-      commit('SET_CURRENT_PAGE_NUMBER', {name, number});
-      if(await dispatch('hasRequestedPage', {name, number})) return;
+    async fetchPage({commit, dispatch}, {name,number}) {
+      commit(DATA.SET_CURRENT_PAGE_NUMBER, {name,number});
+      if(await dispatch('hasRequestedPage', {name,number})) return;
       let response;
       try {
         const params = { page: number };
         const apiPath = name + '/';
-        console.log('apiParams: ', apiPath, params);
         response = await HTTP.get(apiPath, {params});
-      }catch (e) { console.error('error on people/fetchPage:\n', e); }
+      }catch (e) {
+        console.error('error on people/fetchPage:\n', e);
+      }
       const {data: {count, results}} = response;
-      commit('SET_TOTAL_PAGES', {name, count});
-      commit('SET_PAGES', {name, results, number});
+      commit(DATA.SET_TOTAL_PAGES, {name, count});
+      commit(DATA.SET_PAGES, {name, results, number});
     },
-    async hasRequestedPage({getters}, payload) {
-      console.log('hasRequestedPage: ', payload);
-      const {name, number} = payload;
-      console.log(getters.getPages(name));
-      return getters.getPages(name).has(number);
+    async hasRequestedPage({getters}, {name, number}) {
+      return getters.getPagesMap(name).has(number);
     },
   },
   mutations: {
-    SET_CURRENT_PAGE_INFO(state, payload) {
-      console.log('SET_CURRENT_PAGE_INFO: ', payload);
+    [DATA.SET_CURRENT_PAGE_INFO](state, payload) {
       state.currentPageInfo = payload;
     },
-    SET_CURRENT_PAGE_NUMBER(state, payload) {
-      console.log('SET_CURRENT_PAGE_NUMBER: ', payload);
-      const {name, number} = payload;
+    [DATA.SET_CURRENT_PAGE_NUMBER](state, {name, number}) {
       state.currentPageNumber[name] = number;
     },
-    SET_TOTAL_PAGES(state, payload) {
-      console.log('SET_TOTAL_PAGES: ', payload);
-      const {name, count} = payload;
+    [DATA.SET_TOTAL_PAGES](state, {name, count}) {
       state.totalPages[name] = count;
     },
-    SET_PAGES(state, payload) {
-      console.log('SET_PAGES: ', payload);
-      const {name, results, number} = payload;
-      state.pages[name].set(number, peopleMapper(results));
+    [DATA.SET_PAGES](state, {name, results, number}) {
+      state.pages[name].set(number, results);
     },
   },
 };
