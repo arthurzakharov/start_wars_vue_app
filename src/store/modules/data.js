@@ -1,11 +1,11 @@
 import {HTTP} from '../../utils/http-common.js';
 import {DATA} from "../mutation-types";
-import {peopleMapper, speciesMapper} from '../../utils/mappers.js';
+import * as mapper from '../../utils/mappers.js';
 
 const data = {
   namespaced: true,
   state: {
-    currentPageInfo: '',
+    currentPageName: '',
     currentPageNumber: {
       films: 1,
       people: 1,
@@ -32,10 +32,9 @@ const data = {
     },
   },
   getters: {
-    getCurrentPageInfo: state => {
-      console.log('getCurrentPageInfo: ', state);
+    getCurrentPageName: state => {
       let info = {};
-      switch (state.currentPageInfo) {
+      switch (state.currentPageName) {
         case 'films':
           info.title = 'Films';
           info.name = 'films';
@@ -60,10 +59,12 @@ const data = {
           info.title = 'Vehicles';
           info.name = 'vehicles';
           break;
+        case 'home':
+          info.title = 'Home';
+          info.name = 'home';
+          break;
         default:
-          info.title = 'Films';
-          info.name = 'films';
-          console.warn(`data/currentPageInfo contains unexpected value ${state.currentPageInfo}`);
+          console.warn(`data/currentPageName contains unexpected value ${state.currentPageName}`);
       }
       return info;
     },
@@ -73,17 +74,15 @@ const data = {
     getPagesMap: state => pageName => state.pages[pageName],
   },
   actions: {
-    changeCurrentPageInfo({commit}, payload) {
-      commit(DATA.SET_CURRENT_PAGE_INFO, payload);
+    changeCurrentPageName({commit}, pageName) {
+      commit(DATA.SET_CURRENT_PAGE_NAME, pageName);
     },
     async fetchPage({commit, dispatch}, {name,number}) {
       commit(DATA.SET_CURRENT_PAGE_NUMBER, {name,number});
       if(await dispatch('hasRequestedPage', {name,number})) return;
       let response;
       try {
-        const params = { page: number };
-        const apiPath = name + '/';
-        response = await HTTP.get(apiPath, {params});
+        response = await HTTP.get(name + '/', {params: { page: number }});
       }catch (e) {
         console.error('error on people/fetchPage:\n', e);
       }
@@ -96,8 +95,8 @@ const data = {
     },
   },
   mutations: {
-    [DATA.SET_CURRENT_PAGE_INFO](state, payload) {
-      state.currentPageInfo = payload;
+    [DATA.SET_CURRENT_PAGE_NAME](state, pageName) {
+      state.currentPageName = pageName;
     },
     [DATA.SET_CURRENT_PAGE_NUMBER](state, {name, number}) {
       state.currentPageNumber[name] = number;
@@ -106,7 +105,29 @@ const data = {
       state.totalPages[name] = count;
     },
     [DATA.SET_PAGES](state, {name, results, number}) {
-      state.pages[name].set(number, results);
+      switch (name) {
+        case 'films':
+          state.pages[name].set(number, mapper.filmMapper(results));
+          break;
+        case 'people':
+          state.pages[name].set(number, mapper.peopleMapper(results));
+          break;
+        case 'planets':
+          state.pages[name].set(number, mapper.planetMapper(results));
+          break;
+        case 'species':
+          state.pages[name].set(number, mapper.speciesMapper(results));
+          break;
+        case 'starships':
+          state.pages[name].set(number, mapper.starshipMapper(results));
+          break;
+        case 'vehicles':
+          state.pages[name].set(number, mapper.vehiclesMapper(results));
+          break;
+        default:
+          console.error(`DATA.SET_PAGES try to map ${name} that does not exist`);
+      }
+
     },
   },
 };

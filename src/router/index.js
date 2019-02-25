@@ -49,10 +49,10 @@ const router =  new Router({
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  store.dispatch('data/changeCurrentPageInfo', to.name)
+router.beforeEach(({name}, from, next) => {
+  store.dispatch('data/changeCurrentPageName', name)
     .then(() => next())
-    .catch((e) => console.error(`error on performing vuex action data/changeCurrentPageInfo\n${e}`));
+    .catch((e) => console.error(`error on performing vuex action data/changeCurrentPageName\n${e}`));
 });
 
 export default router;

@@ -2,11 +2,11 @@
 	<div class="page">
 		<h1 class="page__title">{{ currentPageInfo.title }} of Star War</h1>
 		<AWithSpinner class="page__list" :is-loading="isLoading">
-			<!--<AItemCard-->
-				<!--v-for="item in pageList"-->
-				<!--:key="getUID(item)"-->
-				<!--:item="item"-->
-			<!--/>-->
+			<AItemCard
+				v-for="item in pageList"
+				:key="getUID(item)"
+				:item="item"
+			/>
 		</AWithSpinner>
 		<APagination
 			:total-pages="totalPages"
@@ -37,7 +37,6 @@
     },
     methods: {
       ...mapActions({
-        changeCurrentPageInfo: 'data/changeCurrentPageInfo',
         fetchPage: 'data/fetchPage',
       }),
       async updateData(nextPageNumber, payload) {
@@ -61,7 +60,7 @@
     },
     computed: {
       ...mapGetters({
-        getCurrentPageInfo: 'data/getCurrentPageInfo',
+        getCurrentPageName: 'data/getCurrentPageName',
         getCurrentPageNumber: 'data/getCurrentPageNumber',
         getTotalPages: 'data/getTotalPages',
         getPages: 'data/getPages',
@@ -69,10 +68,10 @@
     },
 	  beforeRouteEnter(to,from, next) {
       next(self => {
-        self.currentPageInfo = self.getCurrentPageInfo;
+        self.currentPageInfo = self.getCurrentPageName;
         self.updateData(null, {
-          name: self.getCurrentPageInfo.name,
-          number: self.getCurrentPageNumber(self.getCurrentPageInfo.name),
+          name: self.getCurrentPageName.name,
+          number: self.getCurrentPageNumber(self.getCurrentPageName.name),
         });
       });
 	  },
