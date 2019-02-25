@@ -1,5 +1,6 @@
 <template>
 	<Paginate
+		v-if="totalPages !== 1"
 		v-model="page"
 		container-class="paginate"
 		page-class="paginate__item"
@@ -37,8 +38,17 @@
       };
 	  },
     methods: {
-      clickHandlerWrapper(nextPage) { this.clickHandler(nextPage) },
+      clickHandlerWrapper(nextPage) {
+        console.log('APagination method call: ');
+        this.clickHandler(nextPage);
+      },
     },
+	  created() {
+      console.log('APagination created: ');
+    },
+	  updated() {
+      console.log('APagination updated: ');
+    }
   }
 </script>
 

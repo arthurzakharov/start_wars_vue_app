@@ -78,6 +78,7 @@ const data = {
       commit(DATA.SET_CURRENT_PAGE_NAME, pageName);
     },
     async fetchPage({commit, dispatch}, {name,number}) {
+      console.log('fetchPage: ' , name, number);
       commit(DATA.SET_CURRENT_PAGE_NUMBER, {name,number});
       if(await dispatch('hasRequestedPage', {name,number})) return;
       let response;
@@ -102,7 +103,7 @@ const data = {
       state.currentPageNumber[name] = number;
     },
     [DATA.SET_TOTAL_PAGES](state, {name, count}) {
-      state.totalPages[name] = count;
+      state.totalPages[name] = Math.ceil(count / 10);
     },
     [DATA.SET_PAGES](state, {name, results, number}) {
       switch (name) {

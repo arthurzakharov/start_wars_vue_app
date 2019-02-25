@@ -39,22 +39,40 @@
       ...mapActions({
         fetchPage: 'data/fetchPage',
       }),
-      async updateData(nextPageNumber, payload) {
+      async updateData2(nextPageNumber, payload) {
+        console.log('update data is called: ', nextPageNumber, payload);
         this.isLoading = true;
-        const {name, number} = payload;
         const fetchPagePayload = {
-          name: (payload) ? this.currentPageInfo.name : name,
-	        number: (nextPageNumber === null) ? number : 1,
+          name: (payload) ? this.currentPageInfo.name : payload.name,
+	        number: (nextPageNumber === null) ? payload.number : 1,
         };
         try {
           await this.fetchPage(payload);
-          this.currentPageNumber = this.getCurrentPageNumber(name);
-          this.totalPages = this.getTotalPages(name);
+          this.currentPageNumber = this.getCurrentPageNumber(payload.name);
+          this.totalPages = this.getTotalPages(payload.name);
           this.pageList = this.getPages(fetchPagePayload);
         }catch (e) {
           console.error('[PageTemplate.vue]updateData:\n', e);
         }finally {
 	        this.isLoading = false;
+        }
+      },
+	    async updateData(nextPageNumber = 1) {
+        console.log('update data is called: ', nextPageNumber);
+        this.isLoading = true;
+        const payload = {
+          name: this.currentPageInfo.name,
+          number: nextPageNumber,
+        };
+        try {
+          await this.fetchPage(payload);
+          this.currentPageNumber = this.getCurrentPageNumber(payload.name);
+          this.totalPages = this.getTotalPages(payload.name);
+          this.pageList = this.getPages(payload);
+        }catch (e) {
+          console.error('[PageTemplate.vue]updateData:\n', e);
+        }finally {
+          this.isLoading = false;
         }
       }
     },
@@ -69,10 +87,7 @@
 	  beforeRouteEnter(to,from, next) {
       next(self => {
         self.currentPageInfo = self.getCurrentPageName;
-        self.updateData(null, {
-          name: self.getCurrentPageName.name,
-          number: self.getCurrentPageNumber(self.getCurrentPageName.name),
-        });
+        self.updateData();
       });
 	  },
   }

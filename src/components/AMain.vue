@@ -24,12 +24,14 @@
 		flex-grow: 1;
 		display: flex;
 		margin-top: 75px;
-		background-color: $c_black;
+		margin-bottom: 20px;
+		background-color: transparent;
 	}
 	
 	@media screen and (min-width: $mq_pc) {
 		.main {
 			margin-top: 85px;
+			margin-bottom: 30px;
 		}
 	}
 </style>
