@@ -39,16 +39,9 @@
 	  },
     methods: {
       clickHandlerWrapper(nextPage) {
-        console.log('APagination method call: ');
         this.clickHandler(nextPage);
       },
     },
-	  created() {
-      console.log('APagination created: ');
-    },
-	  updated() {
-      console.log('APagination updated: ');
-    }
   }
 </script>
 

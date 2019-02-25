@@ -1,6 +1,6 @@
 <template>
 	<div class="page">
-		<h1 class="page__title">{{ currentPageInfo.title }} of Star War</h1>
+		<h1 class="page__title">{{ currentPageName.title }} of Star War</h1>
 		<AWithSpinner class="page__list" :is-loading="isLoading">
 			<AItemCard
 				v-for="item in pageList"
@@ -30,7 +30,7 @@
       return {
         totalPages: 0,
         currentPageNumber: 0,
-        currentPageInfo: {},
+        currentPageName: {},
         pageList: [],
         isLoading: false,
       };
@@ -39,29 +39,10 @@
       ...mapActions({
         fetchPage: 'data/fetchPage',
       }),
-      async updateData2(nextPageNumber, payload) {
-        console.log('update data is called: ', nextPageNumber, payload);
-        this.isLoading = true;
-        const fetchPagePayload = {
-          name: (payload) ? this.currentPageInfo.name : payload.name,
-	        number: (nextPageNumber === null) ? payload.number : 1,
-        };
-        try {
-          await this.fetchPage(payload);
-          this.currentPageNumber = this.getCurrentPageNumber(payload.name);
-          this.totalPages = this.getTotalPages(payload.name);
-          this.pageList = this.getPages(fetchPagePayload);
-        }catch (e) {
-          console.error('[PageTemplate.vue]updateData:\n', e);
-        }finally {
-	        this.isLoading = false;
-        }
-      },
 	    async updateData(nextPageNumber = 1) {
-        console.log('update data is called: ', nextPageNumber);
         this.isLoading = true;
         const payload = {
-          name: this.currentPageInfo.name,
+          name: this.currentPageName.name,
           number: nextPageNumber,
         };
         try {
@@ -86,7 +67,7 @@
     },
 	  beforeRouteEnter(to,from, next) {
       next(self => {
-        self.currentPageInfo = self.getCurrentPageName;
+        self.currentPageName = self.getCurrentPageName;
         self.updateData();
       });
 	  },
