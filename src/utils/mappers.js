@@ -1,5 +1,7 @@
 const IMG_BASE_URL = 'https://starwars-visualguide.com/assets/img';
 
+// TODO: maybe remove name field from listed fields
+
 export const peopleMapper = (apiCallResult) => {
 	console.log('apiCall mapper: ', apiCallResult);
 	return apiCallResult.reduce((mappedResult, item) => {

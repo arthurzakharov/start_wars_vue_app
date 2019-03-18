@@ -1,9 +1,14 @@
 <template>
 	<div class="item-card">
-		<img :src="cardItem.image" alt="avatar" class="item-card__image">
-		<div class="item-card__info">
-			<div v-for="obj in cardItem.list" :key="getUID(obj)" class="item-card__line">
-				<b class="bold">{{ obj.field }}: </b>{{ obj.value }}
+		<h6 class="item-card__title">{{ cardItem.name.value }}</h6>
+		<div class="item-card__block">
+			<object class="item-card__image" :data="cardItem.image" type="image/png">
+				<img src="../assets/not-loaded.png" alt="avatar" class="item-card__image_404">
+			</object>
+			<div class="item-card__info">
+				<div v-for="obj in cardItem.list" :key="getUID(obj)" class="item-card__line">
+					<b class="bold">{{ obj.field }}: </b>{{ obj.value }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -20,8 +25,8 @@
     },
 	  computed: {
       cardItem: function () {
-	      const {url, image, ...list} = this.item;
-        return {url, image, list};
+	      const {url, image, name, ...list} = this.item;
+        return {url, image, name, list};
       }
 	  },
   }
@@ -31,20 +36,38 @@
 	@import "../styles/vars.scss";
 	
 	.item-card {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
+		display: block;
 		padding: 10px;
 		margin-bottom: 20px;
 		border: 1px solid $c_yellow;
 		border-radius: 10px;
 		background-color: transparent;
 		&:last-of-type { margin-bottom: 0 }
+		&__title {
+			display: inline-block;
+			margin-bottom: 24px;
+			padding-bottom: 8px;
+			border-bottom: 2px solid $c_yellow;
+			font-size: 1.25rem;
+			color: $c_yellow;
+		}
+		&__block {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: flex-start;
+		}
 		&__image {
-			width: 140px;
+			width: 100px;
 			margin-right: 15px;
-			background-color: $c_yellow;
+			background-color: transparent;
 			border-radius: 5px;
+			
+			&_404 {
+				width: 100px;
+				height: 100px;
+				background-size: contain;
+				background-color: transparent;
+			}
 		}
 		&__info {
 			flex-basis: calc(100% - 100px);
