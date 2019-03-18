@@ -1,8 +1,8 @@
 <template>
 	<div class="item-card">
-		<div class="item-card__image"></div>
+		<img :src="cardItem.image" alt="avatar" class="item-card__image">
 		<div class="item-card__info">
-			<div v-for="obj in item" :key="getUID(obj)" class="item-card__line">
+			<div v-for="obj in cardItem.list" :key="getUID(obj)" class="item-card__line">
 				<b class="bold">{{ obj.field }}: </b>{{ obj.value }}
 			</div>
 		</div>
@@ -18,6 +18,12 @@
         required: true,
       }
     },
+	  computed: {
+      cardItem: function () {
+	      const {url, image, ...list} = this.item;
+        return {url, image, list};
+      }
+	  },
   }
 </script>
 
@@ -35,9 +41,8 @@
 		background-color: transparent;
 		&:last-of-type { margin-bottom: 0 }
 		&__image {
-			flex-basis: 90px;
-			width: 90px;
-			height: 90px;
+			width: 140px;
+			margin-right: 15px;
 			background-color: $c_yellow;
 			border-radius: 5px;
 		}

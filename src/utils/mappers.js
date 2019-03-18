@@ -1,4 +1,7 @@
+const IMG_BASE_URL = 'https://starwars-visualguide.com/assets/img';
+
 export const peopleMapper = (apiCallResult) => {
+	console.log('apiCall mapper: ', apiCallResult);
 	return apiCallResult.reduce((mappedResult, item) => {
 		mappedResult.push({
 			name: {
@@ -33,6 +36,8 @@ export const peopleMapper = (apiCallResult) => {
 				field: 'Skin',
 				value: item['skin_color']
 			},
+			url: item['url'],
+			image: getImagePath('characters', item['url'])
 		});
 		return mappedResult;
 	}, []);
@@ -77,6 +82,8 @@ export const speciesMapper = (apiCallResult) => {
 				field: 'Language',
 				value: item['language']
 			},
+			url: item['url'],
+			image: getImagePath('species', item['url'])
 		});
 		return mappedResult;
 	}, []);
@@ -101,6 +108,8 @@ export const filmMapper = (apiCallResult) => {
 				field: 'Release date',
 				value: item['release_date']
 			},
+			url: item['url'],
+			image: getImagePath('films', item['url'])
 		});
 		return mappedResult;
 	}, []);
@@ -145,7 +154,8 @@ export const starshipMapper = (apiCallResult) => {
 				field: 'Passengers',
 				value: item['passengers']
 			},
-
+			url: item['url'],
+			image: getImagePath('starships', item['url'])
 		});
 		return mappedResult;
 	}, []);
@@ -190,7 +200,8 @@ export const planetMapper = (apiCallResult) => {
 				field: 'Terrain',
 				value: item['terrain']
 			},
-
+			url: item['url'],
+			image: getImagePath('planets', item['url'])
 		});
 		return mappedResult;
 	}, []);
@@ -239,7 +250,17 @@ export const vehiclesMapper = (apiCallResult) => {
 				field: 'Vehicle class',
 				value: item['vehicle_class']
 			},
+			url: item['url'],
+			image: getImagePath('vehicles', item['url'])
 		});
 		return mappedResult;
 	}, []);
 };
+
+function parseIdFromUrl(url) {
+	return url.replace(/[^0-9]/g, '');
+}
+
+function getImagePath(type, url) {
+	return `${IMG_BASE_URL}/${type}/${parseIdFromUrl(url)}.jpg`;
+}

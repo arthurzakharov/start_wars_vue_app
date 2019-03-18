@@ -86,10 +86,12 @@ const data = {
         response = await HTTP.get(name + '/', {params: { page: number }});
       }catch (e) {
         console.error('error on people/fetchPage:\n', e);
+      }finally {
+        const {data: {count, results}} = response;
+        console.log('fetch page: response: ', response);
+        commit(DATA.SET_TOTAL_PAGES, {name, count});
+        commit(DATA.SET_PAGES, {name, results, number});
       }
-      const {data: {count, results}} = response;
-      commit(DATA.SET_TOTAL_PAGES, {name, count});
-      commit(DATA.SET_PAGES, {name, results, number});
     },
     async hasRequestedPage({getters}, {name, number}) {
       return getters.getPagesMap(name).has(number);
