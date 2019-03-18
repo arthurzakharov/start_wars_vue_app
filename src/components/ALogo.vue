@@ -1,5 +1,14 @@
 <template>
-	<svg class="logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+	<svg
+		class="logo"
+		version="1.1"
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		x="0px" y="0px" viewBox="0 0 512 512"
+		style="enable-background:new 0 0 512 512;"
+		xml:space="preserve"
+		@click="goToHome"
+	>
 		<g>
 			<path d="M224,64c-41.167,0-74.667,33.5-74.667,74.667c0,41.167,33.5,74.667,74.667,74.667s74.667-33.5,74.667-74.667
 				C298.667,97.5,265.167,64,224,64z M224,192c-29.406,0-53.333-23.927-53.333-53.333S194.594,85.333,224,85.333
@@ -28,14 +37,11 @@
 <script>
   export default {
     name: 'ALogo',
-    components: {},
-    props: [],
-    data() {
-      return {};
+    methods: {
+      goToHome() {
+        this.$router.push({name: 'home'});
+      }
     },
-    methods: {},
-    computed: {},
-    watch: {},
   }
 </script>
 
