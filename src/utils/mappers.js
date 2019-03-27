@@ -94,7 +94,7 @@ export const speciesMapper = (apiCallResult) => {
 export const filmMapper = (apiCallResult) => {
 	return apiCallResult.reduce((mappedResult, item) => {
 		mappedResult.push({
-			title: {
+			name: {
 				field: 'Title',
 				value: item['title']
 			},
