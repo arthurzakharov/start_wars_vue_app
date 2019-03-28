@@ -17,7 +17,7 @@
 	    AFooter,
 	    AMain,
     	AHeader
-    }
+    },
   };
 </script>
 

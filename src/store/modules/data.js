@@ -1,6 +1,7 @@
-import {HTTP} from '../../utils/http-common.js';
-import {DATA} from "../mutation-types";
-import * as mapper from '../../utils/mappers.js';
+import {HTTP} from '../../utils/http-common';
+import {DATA} from '../mutation-types';
+import * as mapper from '../../utils/mappers';
+import {networkErrorHandler} from '../../utils/error-type-detect';
 
 const data = {
   namespaced: true,
@@ -77,7 +78,7 @@ const data = {
     changeCurrentPageName({commit}, pageName) {
       commit(DATA.SET_CURRENT_PAGE_NAME, pageName);
     },
-    async fetchPage({commit, dispatch}, {name,number}) {
+    async fetchPage({commit, dispatch, rootGetters}, {name,number}) {
       console.log('fetchPage: ' , name, number);
       commit(DATA.SET_CURRENT_PAGE_NUMBER, {name,number});
       if(await dispatch('hasRequestedPage', {name,number})) return;
@@ -85,13 +86,12 @@ const data = {
       try {
         response = await HTTP.get(name + '/', {params: { page: number }});
       }catch (e) {
-        console.error('error on people/fetchPage:\n', e);
-      }finally {
-        const {data: {count, results}} = response;
-        console.log('fetch page: response: ', response);
-        commit(DATA.SET_TOTAL_PAGES, {name, count});
-        commit(DATA.SET_PAGES, {name, results, number});
+        dispatch('error/setCurrentError', networkErrorHandler(e.message), {root: true});
       }
+      if(rootGetters['error/getError']) return;
+      const {data: {count, results}} = response;
+      commit(DATA.SET_TOTAL_PAGES, {name, count});
+      commit(DATA.SET_PAGES, {name, results, number});
     },
     async hasRequestedPage({getters}, {name, number}) {
       return getters.getPagesMap(name).has(number);

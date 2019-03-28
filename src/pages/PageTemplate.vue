@@ -50,9 +50,8 @@
           this.currentPageNumber = this.getCurrentPageNumber(payload.name);
           this.totalPages = this.getTotalPages(payload.name);
           this.pageList = this.getPages(payload);
-        }catch (e) {
-          console.error('[PageTemplate.vue]updateData:\n', e);
-        }finally {
+        }
+        finally {
           this.isLoading = false;
         }
       }

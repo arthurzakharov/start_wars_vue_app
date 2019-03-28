@@ -2,5 +2,5 @@ import axios from 'axios';
 
 export const HTTP = axios.create({
 	baseURL: 'https://swapi.co/api/',
-	timeout: 10000,
+	timeout: 3000,
 });
